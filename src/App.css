@@ -10,9 +10,10 @@ form {
 .coordinates {
     display: flex;
     width: 100%;
+    place-items: center;
     place-content: center;
     gap: 10%;
-    margin-bottom: 2rem;
+    margin-bottom: 1.8rem;
 }
 
 .input-container h2 {
@@ -23,6 +24,7 @@ form {
     display: flex;
     justify-content: space-between;
     gap: 0.8rem;
+    padding: 0.2rem 0;
 }
 
 .input input[type='text'] {
@@ -52,9 +54,13 @@ input[type='submit']:hover {
         gap: 1rem;
     }
 
+    .input-container {
+        width: 80%;
+    }
+
     .input {
         padding: 0.8rem;
-        justify-content: space-evenly;
+        justify-content: space-between;
     }
 
     .input input[type='text'] {
