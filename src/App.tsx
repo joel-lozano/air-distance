@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import haversineDistance from 'haversine-distance';
 import './App.css';
 
 const bounds = {
@@ -77,25 +78,8 @@ function App() {
             alert(outOfRangeMessage('longitude'));
             return;
         }
-
-        // Find distance using Haversine formula
-        // Conversion from degrees to radians
-        const radians = (theta: number) => theta * (Math.PI / 180);
         
-        // Constants
-        const earth_radius = 6371000;
-
-        const phiA = radians(pointA.latitude);
-        const phiB = radians(pointB.latitude);
-
-        const deltaPhi = radians(pointB.latitude - pointA.latitude);
-        const deltaLambda = radians(pointB.longitude - pointA.longitude);        
-
-        // Perform calculation
-        const a = Math.sin(deltaPhi / 2) ** 2 + Math.cos(phiA) * Math.cos(phiB) * Math.sin(deltaLambda / 2) ** 2;
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        setDistance(((earth_radius * c) / 1000).toFixed(2));
+        setDistance((parseFloat((haversineDistance(pointA, pointB) / 1000).toFixed(2))).toLocaleString());
     }
 
     return (
