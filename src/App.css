@@ -18,22 +18,28 @@ p {
     margin: 0;
 }
 
-form {
-    margin-top: 5rem;
+#map {
+    width: 80%;
+    height: 20rem;
+    margin: 1rem 0;
 }
 
-.coordinates {
+main {
     display: flex;
-    width: 100%;
+    flex-direction: column;
     place-items: center;
-    place-content: center;
-    gap: 10%;
-    margin-bottom: 4rem;
 }
 
-.input-container h3 {
-    font-size: 2rem;
-    margin: 0.5rem 0;
+form {
+    display: flex;
+    place-items: center;
+    gap: 2rem;
+}
+
+.input-container {
+    display: flex;
+    place-items: center;
+    gap: 1rem;
 }
 
 .input-container input[type='text'] {
@@ -55,26 +61,5 @@ input[type='submit']:hover {
 }
 
 @media screen and (width < 750px) {
-    h2 {
-        margin-top: 4rem;
-    }
 
-    form {
-        margin-top: 4rem;
-    }
-
-    .coordinates {
-        flex-direction: column;
-        gap: 1rem;
-        margin-bottom: 3rem;
-    }
-
-    .input-container {
-        width: 80%;
-    }
-
-    .input-container input[type='text'] {
-        width: 50%;
-        min-width: 15rem;
-    }
 }

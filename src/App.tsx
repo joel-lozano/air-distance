@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import haversineDistance from 'haversine-distance';
+import { MapBrowserEvent } from 'ol';
+import { toLonLat } from 'ol/proj';
+import Map from 'ol/Map';
+import OSM from 'ol/source/OSM';
+import TileLayer from 'ol/layer/Tile';
+import View from 'ol/View';
 import './App.css';
 
 const bounds = {
@@ -7,7 +13,6 @@ const bounds = {
     longitude: 180
 };
 
-// Combine these two functions into one?
 const isInRange = (num: number, bound: number): boolean => {
     if (num < -bound || num > bound) {
         return false;
@@ -36,6 +41,27 @@ const outOfRangeMessage = (quantity: string): string => {
 
 function App() {
     const [ distance, setDistance ] = useState<string | null>(null);
+
+    const map = new Map({
+        target: 'map',
+        layers: [
+            new TileLayer({
+                source: new OSM(),
+            }),
+        ],
+        view: new View({
+            center: [0, 0],
+            zoom: 2,
+        })
+    });
+
+    const handleMapClick = (event: MapBrowserEvent<UIEvent>) => {
+        const gpsCoordinates = toLonLat(event.coordinate);
+        const [ latitude, longitude ] = gpsCoordinates; 
+        console.log(latitude, longitude);
+    };
+
+    map.on('click', handleMapClick);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -87,7 +113,7 @@ function App() {
             <h1>Distance Calculator</h1>
             <p>Enter coordinates in comma-separated format.</p>
             <main>
-                <h2>Distance: {distance}{distance === null ? null : 'km'}</h2>
+                <div id='map'></div>
                 <form onSubmit={handleSubmit}>
                     <div className='coordinates'>
                         <span className='input-container'>
@@ -101,6 +127,7 @@ function App() {
                     </div>
                     <input type='submit' value='Calculate' />
                 </form>
+                <h2>Distance: {distance}{distance === null ? null : 'km'}</h2>
             </main>
         </div>
     )
